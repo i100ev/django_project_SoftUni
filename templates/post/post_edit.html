@@ -1,0 +1,16 @@
+{% extends 'shared/base.html' %}
+
+{% block site_title %}
+    Night city stories | Edit Post
+{% endblock %}
+
+{% block site_content %}
+    <h1>Edit post</h1>
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-dark">Edit</button>
+        </form>
+    </div>
+{% endblock %}

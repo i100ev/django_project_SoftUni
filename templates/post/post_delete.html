@@ -1,0 +1,17 @@
+{% extends 'shared/base.html' %}
+
+{% block site_title %}
+    Night city stories | Delete Post
+{% endblock %}
+
+{% block site_content %}
+    <h1>Delete post</h1>
+    <h3>Delete {{ post.title }}</h3>
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+
+            <button class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+{% endblock %}
