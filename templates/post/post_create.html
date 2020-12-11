@@ -13,4 +13,9 @@
             <button class="btn btn-dark">Post</button>
         </form>
     </div>
+
+    <script>
+        const user_id_field = "{{ user.id }}";
+        document.getElementById("author-id").value = user_id_field;
+    </script>
 {% endblock %}

@@ -10,6 +10,24 @@
     <small>{{ post.date_published }}</small>
     <p>{{ post.body|safe }}</p>
 
-    <a href="{% url 'edit post' post.pk %}" class="btn btn-dark">Edit post</a>
-    <a href="{% url 'delete post' post.pk %}" class="btn btn-danger">Delete post</a>
+    {% if user.id == post.author.id %}
+        <a href="{% url 'edit post' post.pk %}" class="btn btn-dark">Edit post</a>
+        <a href="{% url 'delete post' post.pk %}" class="btn btn-danger">Delete post</a>
+    {% endif %}
+    {% if user.is_authenticated %}
+        {% if has_liked %}
+            <form action="{% url 'like post' post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger btn-sm">Unlike</button>
+            </form>
+        {% else %}
+            <form action="{% url 'like post' post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button>
+            </form>
+        {% endif %}
+    {% endif %}
+
+    <p>{{ total_likes }} Likes</p>
+
 {% endblock %}

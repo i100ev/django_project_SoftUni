@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block site_content %}
+    {% if user.id == post.author.id %}
     <h1>Edit post</h1>
     <div class="form-group">
         <form method="POST">
@@ -13,4 +14,7 @@
             <button class="btn btn-dark">Edit</button>
         </form>
     </div>
+    {% else %}
+        <h2>You dont have permissions to edit this post</h2>
+    {% endif %}
 {% endblock %}

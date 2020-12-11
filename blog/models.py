@@ -9,12 +9,16 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     date_published = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='post_likes')
+
+    def likes_count(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.title + ' | ' + self.author.username
 
     def get_absolute_url(self):
         """
-        Redirects user to newly created post
+        return a string that refer to the object over HTTP
         """
-        return reverse('full post', args=(str(self.id)))
+        return reverse('full post', args=[str(self.id)])
