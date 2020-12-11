@@ -1,16 +1,16 @@
 {% extends 'shared/base.html' %}
 
 {% block site_title %}
-    Pleasures of Night City | Create Post
+    Pleasures of Night City | Login
 {% endblock %}
 
 {% block site_content %}
-    <h1>Create new post</h1>
+    <h1>Login</h1>
     <div class="form-group">
         <form method="POST">
             {% csrf_token %}
-            {{ form }}
-            <button class="btn btn-dark">Post</button>
+            {{ form.as_p }}
+            <button class="btn btn-dark">Login</button>
         </form>
     </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'shared/base.html' %}
 {% block site_title %}
-    Night city stories | Home
+    Pleasures of Night City | Home
 {% endblock %}
 {% block site_content %}
     <h1>It works</h1>
@@ -9,7 +9,7 @@
         <ul>
             <li><a href="{% url 'full post' post.pk %}"> {{ post.title }}</a></li>
             <li>{{ post.author }}</li>
-            <li>{{ post.body }}</li>
+            <li>{{ post.body|safe }}</li>
         </ul>
     {% endfor %}
 {% endblock %}

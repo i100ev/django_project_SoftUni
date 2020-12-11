@@ -1,14 +1,14 @@
 {% extends 'shared/base.html' %}
 
 {% block site_title %}
-    Night city stories | {{ post.title }}
+    Pleasures of Night City | {{ post.title }}
 {% endblock %}
 
 {% block site_content %}
     <h1>{{ post.title }}</h1>
     <h3>{{ post.author }}</h3>
     <small>{{ post.date_published }}</small>
-    <p>{{ post.body }}</p>
+    <p>{{ post.body|safe }}</p>
 
     <a href="{% url 'edit post' post.pk %}" class="btn btn-dark">Edit post</a>
     <a href="{% url 'delete post' post.pk %}" class="btn btn-danger">Delete post</a>
