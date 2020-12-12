@@ -1,6 +1,8 @@
+from django.contrib.auth.models import User
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import FormMixin
 
 from accounts.models import UserProfile
 from blog.models import Post
@@ -31,6 +33,7 @@ class PostDetailView(DetailView):
         total_likes = current_post.likes_count()
         context['total_likes'] = total_likes
 
+
         return context
 
 
@@ -38,6 +41,10 @@ class PostCreateView(CreateView):
     model = Post
     form_class = PostCreateForm
     template_name = 'post/post_create.html'
+
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class PostEditView(UpdateView):
@@ -67,10 +74,7 @@ class ProfilePageView(DetailView):
     template_name = 'profile/profile_details.html'
 
     def get_context_data(self, *args, **kwargs):
-        # TODO Add list of all posts by page_profile
-        # all_posts = Post.objects.all().filter()
         page_profile = get_object_or_404(UserProfile, id=self.kwargs['pk'])
         context = super(ProfilePageView, self).get_context_data(*args, **kwargs)
         context['page_profile'] = page_profile
-
         return context

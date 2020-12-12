@@ -1,13 +1,35 @@
 {% extends 'shared/base.html' %}
+{% load static %}
 
 {% block site_title %}
     Pleasures of Night City | Profile details
 {% endblock %}
 
 {% block site_content %}
-    <h1>Profile details</h1>
-    {{ page_profile.user.username }}
-    {{ page_profile.user.first_name }}
+    <br>
+    {% if user.is_authenticated %}
+        <h1 class="text-center">Profile details for {{ page_profile.user.first_name }}
+            {{ page_profile.user.last_name }}</h1>
+        <div class="col-lg-12 text-center">
+            {% if page_profile.user.userprofile.profile_picture %}
+                <img class="img-fluid rounded img-thumbnail"
+                     src="{{ page_profile.user.userprofile.profile_picture.url }}" width="200" height="200" alt="">
+            {% else %}
+                <img class="rounded img-thumbnail" src="{% static 'images/no_profile_pic.jpg' %}" alt="">
+            {% endif %}
+            <br>
+            {% if page_profile.user.userprofile.short_bio %}
+                <p>{{ page_profile.user.userprofile.short_bio }}</p>
+            {% endif %}
+
+        </div>
+
+    {% else %}
+        <h3 class="text-center">You need to <a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a>
+            to access
+            this content</h3>
+    {% endif %}
+
 
 
 

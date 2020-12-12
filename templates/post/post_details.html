@@ -5,27 +5,25 @@
 {% endblock %}
 
 {% block site_content %}
-    <h1>{{ post.title }}</h1>
-    <h3>{{ post.author }}</h3>
-    <small>{{ post.date_published }}</small>
-    <p>{{ post.body|safe }}</p>
-    {% if post.author.userprofile.short_bio %}
-        <p>{{ post.author.userprofile.short_bio }}</p>
-    {% endif %}
-
-    <a href="{% url 'profile page' post.author.pk %}">Author profile page</a>
-
-    {% if post.author.userprofile.profile_picture %}
-        <img src="{{ post.author.userprofile.profile_picture.url }}">
-    {% else %}
-        <img src="{% static 'images/no_profile_pic.jpg' %}">
-    {% endif %}
-
-    {% if user.id == post.author.id %}
-        <a href="{% url 'edit post' post.pk %}" class="btn btn-dark">Edit post</a>
-        <a href="{% url 'delete post' post.pk %}" class="btn btn-danger">Delete post</a>
-    {% endif %}
     {% if user.is_authenticated %}
+        <h1 class="text-center">{{ post.title }}</h1>
+        <p class="text-center"><small>By {{ post.author.first_name }} {{ post.author.last_name }} |
+            Posted: {{ post.date_published }}</small></p>
+
+        <img class="img-fluid rounded mx-auto d-block" src="{{ post.post_image.url }}">
+
+        {% if user.id == post.author.id %}
+            <br>
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'edit post' post.pk %}" class="btn btn-warning">Edit post</a>
+                <a href="{% url 'delete post' post.pk %}" class="btn btn-danger">Delete post</a>
+            </div>
+            <br>
+        {% endif %}
+
+        <div>{{ post.body|safe }}</div>
+        <p>Total likes: {{ total_likes }}</p>
+
         {% if has_liked %}
             <form action="{% url 'like post' post.pk %}" method="POST">
                 {% csrf_token %}
@@ -37,8 +35,42 @@
                 <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button>
             </form>
         {% endif %}
+
+        <br>
+
+        <h3>About the author</h3>
+
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if post.author.userprofile.profile_picture %}
+                        <img class="img-fluid rounded" src="{{ post.author.userprofile.profile_picture.url }}"
+                             alt="...">
+                    {% else %}
+                        <img class="img-fluid rounded" src="{% static 'images/no_profile_pic.jpg' %}" alt="...">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.author.first_name }} {{ post.author.last_name }}</h5>
+                        {% if post.author.userprofile.short_bio %}
+                            <p class="card-text">{{ post.author.userprofile.short_bio|truncatechars:150 }}</p>
+                        {% endif %}
+                        {% if post.author.userprofile %}
+                            <p class="card-text"><a href="{% url 'profile page' post.author.userprofile.pk %}"><small
+                                    class="text-muted">Author
+                                profile page</small></a></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+    {% else %}
+        <br>
+        <h3 class="text-center">You need to <a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a>
+            to access
+            this content</h3>
     {% endif %}
-
-    <p>{{ total_likes }} Likes</p>
-
 {% endblock %}

@@ -4,18 +4,35 @@
     Pleasures of Night City | Home
 {% endblock %}
 {% block site_content %}
-    <h1>It works</h1>
 
-    {% for post in object_list %}
-        <ul>
-            {% if post.post_image %}
-                <li><img src="{{ post.post_image.url }}"></li>
-            {% endif %}
-            <li><a href="{% url 'full post' post.pk %}"> {{ post.title }} </a></li>
-            <li>{{ post.author }}</li>
-            <li>{{ post.body|safe }}</li>
-        </ul>
-    {% endfor %}
+    <br>
+    <h1 class="text-center">Latest Night City stories</h1>
 
+    <br>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for post in object_list %}
+
+            <div class="col">
+                <div class="card h-100">
+                    <a href="{% url 'full post' post.pk %}">
+                        <img src="{{ post.post_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.subtitle|truncatechars:150 }}</p>
+                    </div>
+                    <div class="card-footer">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'full post' post.pk %}">Read more...</a>
+                        {% else %}
+                            <a href="{% url 'register' %}">Register to read the full article</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
 
 {% endblock %}

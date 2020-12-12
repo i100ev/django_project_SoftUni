@@ -11,11 +11,7 @@ class PostCreateForm(forms.ModelForm, BootstrapFormMixin):
 
     class Meta:
         model = Post
-        fields = ('title', 'subtitle', 'post_image', 'author', 'body')
-
-        widgets = {
-            'author': forms.TextInput(attrs={'value': '', 'id': 'author-id', 'type': 'hidden'}),
-        }
+        fields = ('title', 'subtitle', 'post_image', 'body',)
 
 
 class PostEditForm(forms.ModelForm, BootstrapFormMixin):
@@ -25,6 +21,6 @@ class PostEditForm(forms.ModelForm, BootstrapFormMixin):
 
     class Meta:
         model = Post
-        fields = ('title', 'subtitle', 'post_image', 'body')
+        fields = ('title', 'subtitle', 'post_image', 'body',)
 
 
