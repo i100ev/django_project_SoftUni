@@ -29,7 +29,16 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
                         {% if user.is_authenticated %}
-                            <li><a class="dropdown-item" href="{% url 'edit profile' %}">Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'edit profile' %}">Edit Profile Settings</a></li>
+                            {% if user.userprofile.id %}
+                                <li><a class="dropdown-item" href="{% url 'edit profile info' user.userprofile.id %}">Edit
+                                    Profile Info</a></li>
+                                <li><a class="dropdown-item" href="{% url 'profile page' user.userprofile.id %}">Show
+                                    Profile Page</a></li>
+                                {% else %}
+                                <li><a class="dropdown-item" href="{% url 'create profile info' %}">Create
+                                    Profile Page</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         {% else %}
                             <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>

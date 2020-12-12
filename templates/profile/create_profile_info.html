@@ -1,0 +1,23 @@
+{% extends 'shared/base.html' %}
+
+{% block site_title %}
+    Pleasures of Night City | Create Profile info
+{% endblock %}
+
+{% block site_content %}
+    {% if user.is_authenticated %}
+        <h1>Create Profile Info</h1>
+
+        <div class="form-group">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-dark">Create</button>
+            </form>
+        </div>
+    {% else %}
+        <h2>You dont have permissions to create profile info</h2>
+    {% endif %}
+
+
+{% endblock %}

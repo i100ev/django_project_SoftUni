@@ -1,0 +1,14 @@
+{% extends 'shared/base.html' %}
+
+{% block site_title %}
+    Pleasures of Night City | Profile details
+{% endblock %}
+
+{% block site_content %}
+    <h1>Profile details</h1>
+    {{ page_profile.user.username }}
+    {{ page_profile.user.first_name }}
+
+
+
+{% endblock %}

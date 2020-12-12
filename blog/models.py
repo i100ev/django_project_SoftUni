@@ -25,3 +25,14 @@ class Post(models.Model):
         return a string that refer to the object over HTTP
         """
         return reverse('full post', args=[str(self.id)])
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.post.title + ' | ' + self.name
+

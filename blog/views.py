@@ -1,6 +1,8 @@
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from accounts.models import UserProfile
 from blog.models import Post
 from blog.forms import PostCreateForm, PostEditForm
 from django.http import HttpResponseRedirect
@@ -58,3 +60,17 @@ def post_like(request, pk):
         post.likes.add(request.user)
 
     return HttpResponseRedirect(reverse('full post', args=[str(pk)]))
+
+
+class ProfilePageView(DetailView):
+    model = UserProfile
+    template_name = 'profile/profile_details.html'
+
+    def get_context_data(self, *args, **kwargs):
+        # TODO Add list of all posts by page_profile
+        # all_posts = Post.objects.all().filter()
+        page_profile = get_object_or_404(UserProfile, id=self.kwargs['pk'])
+        context = super(ProfilePageView, self).get_context_data(*args, **kwargs)
+        context['page_profile'] = page_profile
+
+        return context

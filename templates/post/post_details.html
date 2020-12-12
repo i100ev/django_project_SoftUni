@@ -1,5 +1,5 @@
 {% extends 'shared/base.html' %}
-
+{% load static %}
 {% block site_title %}
     Pleasures of Night City | {{ post.title }}
 {% endblock %}
@@ -9,6 +9,17 @@
     <h3>{{ post.author }}</h3>
     <small>{{ post.date_published }}</small>
     <p>{{ post.body|safe }}</p>
+    {% if post.author.userprofile.short_bio %}
+        <p>{{ post.author.userprofile.short_bio }}</p>
+    {% endif %}
+
+    <a href="{% url 'profile page' post.author.pk %}">Author profile page</a>
+
+    {% if post.author.userprofile.profile_picture %}
+        <img src="{{ post.author.userprofile.profile_picture.url }}">
+    {% else %}
+        <img src="{% static 'images/no_profile_pic.jpg' %}">
+    {% endif %}
 
     {% if user.id == post.author.id %}
         <a href="{% url 'edit post' post.pk %}" class="btn btn-dark">Edit post</a>
