@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     'blog',
     'accounts',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -125,8 +126,12 @@ STATICFILES_DIRS = (
     join(BASE_DIR, 'static'),
 )
 
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = join(BASE_DIR, 'media')
 
+# Login redirect
 LOGIN_REDIRECT_URL = 'index'
+
+# Logout redirect
 LOGOUT_REDIRECT_URL = 'index'

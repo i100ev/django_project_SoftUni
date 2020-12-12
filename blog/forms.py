@@ -1,26 +1,30 @@
 from django import forms
 
 from blog.models import Post
+from core.BootstrapFormMixin import BootstrapFormMixin
 
 
-class PostCreateForm(forms.ModelForm):
+class PostCreateForm(forms.ModelForm, BootstrapFormMixin):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setup_form()
+
     class Meta:
         model = Post
-        fields = ('title', 'author', 'body')
+        fields = ('title', 'subtitle', 'post_image', 'author', 'body')
 
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'author': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'author-id', 'type': 'hidden'}),
-            'body': forms.Textarea(attrs={'class': 'form-control'}),
+            'author': forms.TextInput(attrs={'value': '', 'id': 'author-id', 'type': 'hidden'}),
         }
 
 
-class PostEditForm(forms.ModelForm):
+class PostEditForm(forms.ModelForm, BootstrapFormMixin):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setup_form()
+
     class Meta:
         model = Post
-        fields = ('title', 'body')
+        fields = ('title', 'subtitle', 'post_image', 'body')
 
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'body': forms.Textarea(attrs={'class': 'form-control'}),
-        }
+

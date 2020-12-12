@@ -1,4 +1,5 @@
 {% extends 'shared/base.html' %}
+{% load static %}
 {% block site_title %}
     Pleasures of Night City | Home
 {% endblock %}
@@ -7,9 +8,14 @@
 
     {% for post in object_list %}
         <ul>
-            <li><a href="{% url 'full post' post.pk %}"> {{ post.title }}</a></li>
+            {% if post.post_image %}
+                <li><img src="{{ post.post_image.url }}"></li>
+            {% endif %}
+            <li><a href="{% url 'full post' post.pk %}"> {{ post.title }} </a></li>
             <li>{{ post.author }}</li>
             <li>{{ post.body|safe }}</li>
         </ul>
     {% endfor %}
+
+
 {% endblock %}

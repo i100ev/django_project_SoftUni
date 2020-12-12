@@ -6,3 +6,11 @@ body {
     background: #fcee0a;
     min-height: 94vh;
 }
+
+/*Media*/
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-collapse {
+        justify-content: flex-end;
+    }
+}

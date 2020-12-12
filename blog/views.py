@@ -1,4 +1,4 @@
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from blog.models import Post
@@ -47,17 +47,14 @@ class PostEditView(UpdateView):
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'post/post_delete.html'
-    success_url = '/'
+    success_url = reverse_lazy('index')
 
 
 def post_like(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
-    has_liked = False
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
-        has_liked = False
     else:
         post.likes.add(request.user)
-        has_liked = True
 
     return HttpResponseRedirect(reverse('full post', args=[str(pk)]))
