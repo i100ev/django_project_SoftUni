@@ -26,13 +26,14 @@
                         {% if user.is_authenticated %}
                             <a href="{% url 'full post' post.pk %}">Read more...</a>
                         {% else %}
-                            <a href="{% url 'register' %}">Register to read the full article</a>
+                            <a href="{% url 'register' %}">Register</a> or <a href="{% url 'login' %}">Login</a> to read the full article
                         {% endif %}
                     </div>
                 </div>
             </div>
 
         {% endfor %}
+    <br>
     </div>
 
 {% endblock %}
